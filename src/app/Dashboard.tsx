@@ -86,9 +86,69 @@ const invoiceData = [
     totalAmount: "$300.00",
     paymentMethod: "Credit Card",
   },
+  {
+    invoice: "INV001",
+    paymentStatus: "Paid",
+    totalAmount: "$250.00",
+    paymentMethod: "Credit Card",
+  },
+  {
+    invoice: "INV002",
+    paymentStatus: "Pending",
+    totalAmount: "$150.00",
+    paymentMethod: "PayPal",
+  },
+  {
+    invoice: "INV003",
+    paymentStatus: "Unpaid",
+    totalAmount: "$350.00",
+    paymentMethod: "Bank Transfer",
+  },
+  {
+    invoice: "INV004",
+    paymentStatus: "Paid",
+    totalAmount: "$450.00",
+    paymentMethod: "Credit Card",
+  },
+  {
+    invoice: "INV005",
+    paymentStatus: "Paid",
+    totalAmount: "$550.00",
+    paymentMethod: "PayPal",
+  },
+  {
+    invoice: "INV006",
+    paymentStatus: "Pending",
+    totalAmount: "$200.00",
+    paymentMethod: "Bank Transfer",
+  },
+  {
+    invoice: "INV007",
+    paymentStatus: "Unpaid",
+    totalAmount: "$300.00",
+    paymentMethod: "Credit Card",
+  },
 ];
 export function Dashboard() {
-  const [invoices, setInvoices] = useState(invoiceData);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  // Calculate total number of pages
+  const totalPages = Math.ceil(invoiceData.length / 5);
+
+  // Get data for current page
+  const currentPageData = invoiceData.slice(
+    currentPage * 5,
+    currentPage * 5 + 5
+  );
+
+  const handlePrevPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+  const [invoices, setInvoices] = useState(invoiceData.slice(currentPage, 5));
   const [btnDisable, setBtnDisable] = useState(true);
   const { setTheme } = useTheme();
   const form = useForm();
@@ -275,6 +335,7 @@ export function Dashboard() {
                   <Button className="ml-auto">Add Data</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
+                  <h2 className="font-bold text-2xl">Add Data</h2>
                   <Form {...form}>
                     <form
                       onSubmit={form.handleSubmit(onSubmit)}
@@ -355,7 +416,13 @@ export function Dashboard() {
               </AlertDialog>
             </div>
 
-            <TableDemo invoices={invoices} setInvoices={setInvoices} />
+            <TableDemo
+              invoices={invoices}
+              setInvoices={setInvoices}
+              currentPageData={currentPageData}
+              handleNextPage={handleNextPage}
+              handlePrevPage={handlePrevPage}
+            />
           </Card>
         </div>
       </main>

@@ -37,10 +37,25 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 // const invoices =
 
-export function TableDemo({ invoices, setInvoices }: any) {
+export function TableDemo({
+  invoices,
+  setInvoices,
+  currentPageData,
+  handlePrevPage,
+  handleNextPage,
+}: any) {
   const form = useForm();
 
   const [formValue, setFormValue] = useState();
@@ -74,172 +89,194 @@ export function TableDemo({ invoices, setInvoices }: any) {
   };
 
   return (
-    <Table>
-      <TableCaption>A list of invoices.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead
-          //   className="text-right"
-          >
-            Amount
-          </TableHead>
-          <TableHead>Status</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {invoices.map((invoice: any, i: any) => (
-          <TableRow key={invoice.invoice}>
-            <TableCell className="font-medium">{invoice.invoice}</TableCell>
-            <TableCell>{invoice.paymentStatus}</TableCell>
-            <TableCell>{invoice.paymentMethod}</TableCell>
-            <TableCell
-            //  className="text-right"
+    <div>
+      <Table>
+        <TableCaption>A list of invoices.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Invoice</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Method</TableHead>
+            <TableHead
+            //   className="text-right"
             >
-              {invoice.totalAmount}
-            </TableCell>
-            <TableCell className="flex">
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Pencil
-                    className="cursor-pointer"
-                    size={18}
-                    onClick={() => setFormValue(invoices[i])}
-                  />
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <Form {...form}>
-                    <form
-                      onSubmit={form.handleSubmit(onSubmit)}
-                      className="space-y-8"
-                    >
-                      <FormField
-                        control={form.control}
-                        name="invoice"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Invoice</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="invoice"
-                                {...field}
-                                defaultValue={formValue.invoice}
-                              />
-                            </FormControl>
-
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="paymentMethod"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Invoice</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="method"
-                                {...field}
-                                defaultValue={formValue?.paymentMethod}
-                              />
-                            </FormControl>
-
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="paymentStatus"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Invoice</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="status"
-                                {...field}
-                                defaultValue={formValue?.paymentStatus}
-                              />
-                            </FormControl>
-
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="totalAmount"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Invoice</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="total"
-                                {...field}
-                                defaultValue={formValue?.totalAmount}
-                              />
-                            </FormControl>
-
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      {/* <Button type="submit">Submit</Button>
-                      <Button>hello</Button> */}
-                      <AlertDialogFooter>
-                        <AlertDialogCancel onClick={() => form.reset()}>
-                          Cancel
-                        </AlertDialogCancel>
-                        <Button type="submit">Submit</Button>
-                      </AlertDialogFooter>
-                    </form>
-                  </Form>
-                </AlertDialogContent>
-              </AlertDialog>
-              /
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Trash2 className="cursor-pointer" size={18} />
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you absolutely sure?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      invoice from your account.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={() =>
-                        setInvoices(
-                          invoices.filter(
-                            (inv: any) => inv.invoice !== invoice.invoice
-                          )
-                        )
-                      }
-                    >
-                      Continue
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </TableCell>
+              Amount
+            </TableHead>
+            <TableHead>Status</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-      {/* <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow>
-      </TableFooter> */}
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {currentPageData.map((invoice: any, i: any) => (
+            <TableRow key={invoice.invoice}>
+              <TableCell className="font-medium">{invoice.invoice}</TableCell>
+              <TableCell>{invoice.paymentStatus}</TableCell>
+              <TableCell>{invoice.paymentMethod}</TableCell>
+              <TableCell
+              //  className="text-right"
+              >
+                {invoice.totalAmount}
+              </TableCell>
+              <TableCell className="flex">
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Pencil
+                      className="cursor-pointer"
+                      size={18}
+                      onClick={() => setFormValue(invoices[i])}
+                    />
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <h2 className="font-bold text-2xl">Edit Data</h2>
+
+                    <Form {...form}>
+                      <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="space-y-8"
+                      >
+                        <FormField
+                          control={form.control}
+                          name="invoice"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Invoice</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="invoice"
+                                  {...field}
+                                  defaultValue={formValue.invoice}
+                                />
+                              </FormControl>
+
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="paymentMethod"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Invoice</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="method"
+                                  {...field}
+                                  defaultValue={formValue?.paymentMethod}
+                                />
+                              </FormControl>
+
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="paymentStatus"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Invoice</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="status"
+                                  {...field}
+                                  defaultValue={formValue?.paymentStatus}
+                                />
+                              </FormControl>
+
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="totalAmount"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Invoice</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="total"
+                                  {...field}
+                                  defaultValue={formValue?.totalAmount}
+                                />
+                              </FormControl>
+
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        {/* <Button type="submit">Submit</Button>
+                      <Button>hello</Button> */}
+                        <AlertDialogFooter>
+                          <AlertDialogCancel onClick={() => form.reset()}>
+                            Cancel
+                          </AlertDialogCancel>
+                          <Button type="submit">Submit</Button>
+                        </AlertDialogFooter>
+                      </form>
+                    </Form>
+                  </AlertDialogContent>
+                </AlertDialog>
+                /
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Trash2 className="cursor-pointer" size={18} />
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete invoice from your account.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() =>
+                          setInvoices(
+                            invoices.filter(
+                              (inv: any) => inv.invoice !== invoice.invoice
+                            )
+                          )
+                        }
+                      >
+                        Continue
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <Pagination className="flex justify-end">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious onClick={handlePrevPage} />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#" isActive>
+              2
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">3</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext onClick={handleNextPage} />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </div>
   );
 }
