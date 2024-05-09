@@ -12,12 +12,13 @@ import {
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const router = useRouter();
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -34,7 +35,8 @@ const LoginForm = () => {
   };
 
   const registration = () => {
-    console.log("first");
+    // console.log("first");
+    router.push("/auth/register");
   };
 
   return (

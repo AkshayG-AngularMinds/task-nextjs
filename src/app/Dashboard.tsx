@@ -44,7 +44,7 @@ import { z } from "zod";
 import Header from "./Header";
 
 export function Dashboard() {
-  const invoiceData = [
+  const [invoiceData, setInvoiceData] = useState([
     {
       invoice: "inv001",
       paymentStatus: "Paid",
@@ -129,7 +129,7 @@ export function Dashboard() {
       totalAmount: "$300.00",
       paymentMethod: "Credit Card",
     },
-  ];
+  ]);
   const [searchStr, setSearchStr] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [invoices, setInvoices] = useState([]);
@@ -188,8 +188,6 @@ export function Dashboard() {
 
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <Header />
-
       <main className="flex  flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
         <div className="">
           <Card>
