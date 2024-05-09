@@ -47,8 +47,6 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-// const invoices =
-
 export function TableDemo({
   invoices,
   setInvoices,
@@ -98,11 +96,7 @@ export function TableDemo({
             <TableHead className="w-[100px]">Invoice</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Method</TableHead>
-            <TableHead
-            //   className="text-right"
-            >
-              Amount
-            </TableHead>
+            <TableHead>Amount</TableHead>
             <TableHead>Status</TableHead>
           </TableRow>
         </TableHeader>
@@ -112,11 +106,7 @@ export function TableDemo({
               <TableCell className="font-medium">{invoice.invoice}</TableCell>
               <TableCell>{invoice.paymentStatus}</TableCell>
               <TableCell>{invoice.paymentMethod}</TableCell>
-              <TableCell
-              //  className="text-right"
-              >
-                {invoice.totalAmount}
-              </TableCell>
+              <TableCell>{invoice.totalAmount}</TableCell>
               <TableCell className="flex">
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
@@ -262,7 +252,6 @@ export function TableDemo({
           {pageArray?.map((p: any, i: number) => (
             <PaginationItem>
               <PaginationLink
-                href="#"
                 isActive={currentPage === i ? true : false}
                 onClick={() => setCurrentPage(i)}
               >
