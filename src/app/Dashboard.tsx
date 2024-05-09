@@ -87,43 +87,43 @@ const invoiceData = [
     paymentMethod: "Credit Card",
   },
   {
-    invoice: "INV001",
+    invoice: "INV008",
     paymentStatus: "Paid",
     totalAmount: "$250.00",
     paymentMethod: "Credit Card",
   },
   {
-    invoice: "INV002",
+    invoice: "INV009",
     paymentStatus: "Pending",
     totalAmount: "$150.00",
     paymentMethod: "PayPal",
   },
   {
-    invoice: "INV003",
+    invoice: "INV010",
     paymentStatus: "Unpaid",
     totalAmount: "$350.00",
     paymentMethod: "Bank Transfer",
   },
   {
-    invoice: "INV004",
+    invoice: "INV011",
     paymentStatus: "Paid",
     totalAmount: "$450.00",
     paymentMethod: "Credit Card",
   },
   {
-    invoice: "INV005",
+    invoice: "INV012",
     paymentStatus: "Paid",
     totalAmount: "$550.00",
     paymentMethod: "PayPal",
   },
   {
-    invoice: "INV006",
+    invoice: "INV013",
     paymentStatus: "Pending",
     totalAmount: "$200.00",
     paymentMethod: "Bank Transfer",
   },
   {
-    invoice: "INV007",
+    invoice: "INV014",
     paymentStatus: "Unpaid",
     totalAmount: "$300.00",
     paymentMethod: "Credit Card",
@@ -133,13 +133,13 @@ export function Dashboard() {
   const [currentPage, setCurrentPage] = useState(0);
 
   // Calculate total number of pages
-  const totalPages = Math.ceil(invoiceData.length / 5);
+  // const totalPages = Math.ceil(invoiceData.length / 5);
 
   // Get data for current page
-  const currentPageData = invoiceData.slice(
-    currentPage * 5,
-    currentPage * 5 + 5
-  );
+  // const currentPageData = invoiceData.slice(
+  //   currentPage * 5,
+  //   currentPage * 5 + 5
+  // );
 
   const handlePrevPage = () => {
     setCurrentPage(currentPage - 1);
@@ -148,7 +148,7 @@ export function Dashboard() {
   const handleNextPage = () => {
     setCurrentPage(currentPage + 1);
   };
-  const [invoices, setInvoices] = useState(invoiceData.slice(currentPage, 5));
+  const [invoices, setInvoices] = useState(invoiceData);
   const [btnDisable, setBtnDisable] = useState(true);
   const { setTheme } = useTheme();
   const form = useForm();
@@ -186,7 +186,7 @@ export function Dashboard() {
           </Link>
           <Link
             href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
+            className="text-foreground transition-colors hover:text-foreground"
           >
             Dashboard
           </Link>
@@ -210,7 +210,7 @@ export function Dashboard() {
           </Link>
           <Link
             href="#"
-            className="text-foreground transition-colors hover:text-foreground"
+            className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Settings
           </Link>
@@ -284,6 +284,10 @@ export function Dashboard() {
                       invoice.invoice.includes(searchValue)
                     )
                   );
+                  let a = invoiceData.filter((invoice: any) =>
+                    invoice.invoice.includes(searchValue)
+                  );
+                  console.log(a);
                 }}
               />
             </div>
@@ -364,7 +368,7 @@ export function Dashboard() {
                         name="paymentMethod"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Invoice</FormLabel>
+                            <FormLabel>Method</FormLabel>
                             <FormControl>
                               <Input placeholder="method" {...field} />
                             </FormControl>
@@ -378,7 +382,7 @@ export function Dashboard() {
                         name="paymentStatus"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Invoice</FormLabel>
+                            <FormLabel>Status</FormLabel>
                             <FormControl>
                               <Input placeholder="status" {...field} />
                             </FormControl>
@@ -392,7 +396,7 @@ export function Dashboard() {
                         name="totalAmount"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Invoice</FormLabel>
+                            <FormLabel>Total</FormLabel>
                             <FormControl>
                               <Input placeholder="total" {...field} />
                             </FormControl>
@@ -419,7 +423,6 @@ export function Dashboard() {
             <TableDemo
               invoices={invoices}
               setInvoices={setInvoices}
-              currentPageData={currentPageData}
               handleNextPage={handleNextPage}
               handlePrevPage={handlePrevPage}
             />

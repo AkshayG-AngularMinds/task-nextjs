@@ -1,146 +1,106 @@
 "use client";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-// import { toast } from "@/components/ui/use-toast";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
-const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  email: z.string().min(2, {
-    message: "Email must be at least 2 characters.",
-  }),
-  password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
-  }),
-  //   contact: z.string().required(2, {
-  // message: "Contact number is required.",
-  //   }),
-  contact: z.string({ message: "Contact number is required" }),
-});
-
-const InputForm = () => {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      username: "",
-      email: "",
-    },
+const Register = () => {
+  const [userData, setUserData] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
   });
-
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
-  }
-
+  const handleSubmit = () => {
+    console.log("object", userData);
+  };
   return (
     <div className="flex justify-center items-center h-screen">
-      <Card className="w-[400px] space-y-4">
-        <CardHeader className="text-center">
-          <CardTitle>Register new account</CardTitle>
+      <Card className="mx-auto max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-xl">Sign Up</CardTitle>
+          <CardDescription>
+            Enter your information to create an account
+          </CardDescription>
         </CardHeader>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="w-2/3 space-y-6 ml-4 "
-          >
-            <div className="ml-4">
-              <div className="flex justify-center mb-5">
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      {/* <FormLabel>Username</FormLabel> */}
-                      <p className="font-bold">Username</p>
-                      <FormControl>
-                        <Input placeholder="username" {...field} />
-                      </FormControl>
-                      <FormDescription>
-                        This is your public display name.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+        <CardContent>
+          <div className="grid gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="first-name">First name</Label>
+                <Input
+                  id="first-name"
+                  placeholder="Max"
+                  required
+                  onChange={(e) =>
+                    setUserData({ ...userData, firstname: e.target.value })
+                  }
                 />
               </div>
-              <div className="flex justify-center mb-5">
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <p className="font-bold">Email</p>
-                      <FormControl>
-                        <Input placeholder="email" {...field} />
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="flex justify-center mb-5">
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <p className="font-bold">Password</p>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="password"
-                          {...field}
-                        />
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="flex justify-center mb-5">
-                <FormField
-                  control={form.control}
-                  name="contact"
-                  render={({ field }) => (
-                    <FormItem>
-                      <p className="font-bold">Contact</p>
-                      <FormControl>
-                        <Input type="number" placeholder="contact" {...field} />
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
+              <div className="grid gap-2">
+                <Label htmlFor="last-name">Last name</Label>
+                <Input
+                  id="last-name"
+                  placeholder="Robinson"
+                  required
+                  onChange={(e) =>
+                    setUserData({ ...userData, lastname: e.target.value })
+                  }
                 />
               </div>
             </div>
-            <div className="flex justify-center">
-              <Button className="mb-4" type="submit">
-                Submit
-              </Button>
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                required
+                onChange={(e) =>
+                  setUserData({ ...userData, email: e.target.value })
+                }
+              />
             </div>
-          </form>
-        </Form>
+            <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                onChange={(e) =>
+                  setUserData({ ...userData, password: e.target.value })
+                }
+              />
+            </div>
+            <Button
+              // type="submit"
+              onClick={() => handleSubmit()}
+              className="w-full"
+            >
+              Create an account
+            </Button>
+            <Button variant="outline" className="w-full">
+              Sign up with GitHub
+            </Button>
+          </div>
+          <div className="mt-4 text-center text-sm">
+            Already have an account?{" "}
+            <Link href="#" className="underline">
+              Sign in
+            </Link>
+          </div>
+        </CardContent>
       </Card>
     </div>
   );
 };
 
-export default InputForm;
+export default Register;

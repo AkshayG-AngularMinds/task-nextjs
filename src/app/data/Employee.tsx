@@ -52,7 +52,6 @@ import {
 export function TableDemo({
   invoices,
   setInvoices,
-  currentPageData,
   handlePrevPage,
   handleNextPage,
 }: any) {
@@ -106,7 +105,7 @@ export function TableDemo({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {currentPageData.map((invoice: any, i: any) => (
+          {invoices.map((invoice: any, i: any) => (
             <TableRow key={invoice.invoice}>
               <TableCell className="font-medium">{invoice.invoice}</TableCell>
               <TableCell>{invoice.paymentStatus}</TableCell>
@@ -156,7 +155,7 @@ export function TableDemo({
                           name="paymentMethod"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Invoice</FormLabel>
+                              <FormLabel>Method</FormLabel>
                               <FormControl>
                                 <Input
                                   placeholder="method"
@@ -174,7 +173,7 @@ export function TableDemo({
                           name="paymentStatus"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Invoice</FormLabel>
+                              <FormLabel>Status</FormLabel>
                               <FormControl>
                                 <Input
                                   placeholder="status"
@@ -192,7 +191,7 @@ export function TableDemo({
                           name="totalAmount"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Invoice</FormLabel>
+                              <FormLabel>Total</FormLabel>
                               <FormControl>
                                 <Input
                                   placeholder="total"
