@@ -22,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { TableDemo } from "./data/Employee";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import {
   AlertDialog,
@@ -45,110 +45,124 @@ import { z } from "zod";
 
 const invoiceData = [
   {
-    invoice: "INV001",
+    invoice: "inv001",
     paymentStatus: "Paid",
     totalAmount: "$250.00",
     paymentMethod: "Credit Card",
   },
   {
-    invoice: "INV002",
+    invoice: "inv002",
     paymentStatus: "Pending",
     totalAmount: "$150.00",
     paymentMethod: "PayPal",
   },
   {
-    invoice: "INV003",
+    invoice: "inv003",
     paymentStatus: "Unpaid",
     totalAmount: "$350.00",
     paymentMethod: "Bank Transfer",
   },
   {
-    invoice: "INV004",
+    invoice: "inv004",
     paymentStatus: "Paid",
     totalAmount: "$450.00",
     paymentMethod: "Credit Card",
   },
   {
-    invoice: "INV005",
+    invoice: "inv005",
     paymentStatus: "Paid",
     totalAmount: "$550.00",
     paymentMethod: "PayPal",
   },
   {
-    invoice: "INV006",
+    invoice: "inv006",
     paymentStatus: "Pending",
     totalAmount: "$200.00",
     paymentMethod: "Bank Transfer",
   },
   {
-    invoice: "INV007",
+    invoice: "inv007",
     paymentStatus: "Unpaid",
     totalAmount: "$300.00",
     paymentMethod: "Credit Card",
   },
   {
-    invoice: "INV008",
+    invoice: "inv008",
     paymentStatus: "Paid",
     totalAmount: "$250.00",
     paymentMethod: "Credit Card",
   },
   {
-    invoice: "INV009",
+    invoice: "inv009",
     paymentStatus: "Pending",
     totalAmount: "$150.00",
     paymentMethod: "PayPal",
   },
   {
-    invoice: "INV010",
+    invoice: "inv010",
     paymentStatus: "Unpaid",
     totalAmount: "$350.00",
     paymentMethod: "Bank Transfer",
   },
   {
-    invoice: "INV011",
+    invoice: "inv011",
     paymentStatus: "Paid",
     totalAmount: "$450.00",
     paymentMethod: "Credit Card",
   },
   {
-    invoice: "INV012",
+    invoice: "inv012",
     paymentStatus: "Paid",
     totalAmount: "$550.00",
     paymentMethod: "PayPal",
   },
   {
-    invoice: "INV013",
+    invoice: "inv013",
     paymentStatus: "Pending",
     totalAmount: "$200.00",
     paymentMethod: "Bank Transfer",
   },
   {
-    invoice: "INV014",
+    invoice: "inv014",
     paymentStatus: "Unpaid",
     totalAmount: "$300.00",
     paymentMethod: "Credit Card",
   },
 ];
 export function Dashboard() {
+  const [searchStr, setSearchStr] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
+  const [invoices, setInvoices] = useState([]);
+  const [totalPages, setTotalPages] = useState();
+  const [pageArray, setPageArray] = useState([]);
+  let totalItemsPerPage = 5;
+  const displayItems = (): any => {
+    let start = currentPage * totalItemsPerPage;
+    let end = start + totalItemsPerPage;
+    let filteredArray = invoiceData
+      .slice(start, end)
+      .filter((item: any) =>
+        item.invoice.toLowerCase().includes(searchStr.toLowerCase())
+      );
 
-  // Calculate total number of pages
-  // const totalPages = Math.ceil(invoiceData.length / 5);
-
-  // Get data for current page
-  // const currentPageData = invoiceData.slice(
-  //   currentPage * 5,
-  //   currentPage * 5 + 5
-  // );
-
+    setInvoices(filteredArray);
+  };
+  useEffect(() => {
+    displayItems();
+  }, [searchStr, currentPage]);
+  useEffect(() => {
+    setTotalPages(Math.ceil(invoiceData.length / totalItemsPerPage));
+  }, []);
+  useEffect(() => {
+    setPageArray(Array.from({ length: totalPages }, () => 1));
+  }, [totalPages]);
   const handlePrevPage = () => {
-    setCurrentPage(currentPage - 1);
+    if (currentPage > 0) setCurrentPage(currentPage - 1);
   };
 
   const handleNextPage = () => {
-    setCurrentPage(currentPage + 1);
+    if (currentPage < totalPages - 1) setCurrentPage(currentPage + 1);
   };
-  const [invoices, setInvoices] = useState(invoiceData);
   const [btnDisable, setBtnDisable] = useState(true);
   const { setTheme } = useTheme();
   const form = useForm();
@@ -275,19 +289,11 @@ export function Dashboard() {
                 className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
                 onChange={(e) => {
                   let searchValue = e.target.value;
+                  setSearchStr(searchValue);
                   searchValue = searchValue.trim();
                   if (searchValue === "") {
                     setInvoices(invoiceData);
                   }
-                  setInvoices(
-                    invoiceData.filter((invoice: any) =>
-                      invoice.invoice.includes(searchValue)
-                    )
-                  );
-                  let a = invoiceData.filter((invoice: any) =>
-                    invoice.invoice.includes(searchValue)
-                  );
-                  console.log(a);
                 }}
               />
             </div>
@@ -425,6 +431,9 @@ export function Dashboard() {
               setInvoices={setInvoices}
               handleNextPage={handleNextPage}
               handlePrevPage={handlePrevPage}
+              pageArray={pageArray}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
             />
           </Card>
         </div>

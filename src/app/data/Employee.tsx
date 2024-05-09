@@ -54,6 +54,9 @@ export function TableDemo({
   setInvoices,
   handlePrevPage,
   handleNextPage,
+  pageArray,
+  currentPage,
+  setCurrentPage = { setCurrentPage },
 }: any) {
   const form = useForm();
 
@@ -77,7 +80,6 @@ export function TableDemo({
     if (values.totalAmount === undefined) {
       values.totalAmount = formValue.totalAmount;
     }
-    // console.log(values);
     let newInvoices = invoices.map((inv) => {
       if (inv.invoice == formValue.invoice) {
         return values;
@@ -204,8 +206,7 @@ export function TableDemo({
                             </FormItem>
                           )}
                         />
-                        {/* <Button type="submit">Submit</Button>
-                      <Button>hello</Button> */}
+
                         <AlertDialogFooter>
                           <AlertDialogCancel onClick={() => form.reset()}>
                             Cancel
@@ -254,24 +255,26 @@ export function TableDemo({
       </Table>
       <Pagination className="flex justify-end">
         <PaginationContent>
-          <PaginationItem>
+          <PaginationItem className="cursor-pointer">
             <PaginationPrevious onClick={handlePrevPage} />
           </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" isActive>
-              2
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">3</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
+
+          {pageArray?.map((p: any, i: number) => (
+            <PaginationItem>
+              <PaginationLink
+                href="#"
+                isActive={currentPage === i ? true : false}
+                onClick={() => setCurrentPage(i)}
+              >
+                {i + 1}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
+
+          {/* <PaginationItem>
             <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
+          </PaginationItem> */}
+          <PaginationItem className="cursor-pointer">
             <PaginationNext onClick={handleNextPage} />
           </PaginationItem>
         </PaginationContent>
