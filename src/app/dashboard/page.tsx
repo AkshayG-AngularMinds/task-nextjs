@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { TableDemo } from "./data/Employee";
+import { TableDemo } from "../data/Employee";
 import { useEffect, useState } from "react";
 import {
   AlertDialog,
@@ -41,9 +41,9 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import Header from "./Header";
+import Header from "../Header";
 
-export function Dashboard() {
+const Dashboard = () => {
   const [invoiceData, setInvoiceData] = useState([
     {
       invoice: "inv001",
@@ -188,6 +188,8 @@ export function Dashboard() {
 
   return (
     <div className="flex min-h-screen w-full flex-col">
+      <Header />
+
       <main className="flex  flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
         <div className="">
           <Card>
@@ -313,4 +315,6 @@ export function Dashboard() {
       </footer>
     </div>
   );
-}
+};
+
+export default Dashboard;

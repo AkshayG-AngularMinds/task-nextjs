@@ -2,7 +2,15 @@
 import React from "react";
 import Link from "next/link";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { CircleUser, Menu, Moon, Package2, Search, Sun } from "lucide-react";
+import {
+  CircleUser,
+  Menu,
+  Moon,
+  Package2,
+  Router,
+  Search,
+  Sun,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,9 +21,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
-
+import { useRouter } from "next/navigation";
 function Header() {
   const { setTheme } = useTheme();
+  const router = useRouter();
+  const path = window.location.href;
+  // console.log(path);
   return (
     <div className="flex w-full flex-col">
       <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -28,7 +39,7 @@ function Header() {
             <span className="sr-only">Acme Inc</span>
           </Link>
           <Link
-            href="#"
+            href="/dashboard"
             className="text-foreground transition-colors hover:text-foreground"
           >
             Dashboard
@@ -120,10 +131,14 @@ function Header() {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => router.push("/profile")}>
+                Profile
+              </DropdownMenuItem>
               <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push("/auth/login")}>
+                Logout
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <DropdownMenu>

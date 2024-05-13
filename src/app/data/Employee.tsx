@@ -60,7 +60,7 @@ export function TableDemo({
 
   const [formValue, setFormValue] = useState();
   const formSchema = z.object({
-    username: z.string().min(2, {
+    country: z.string().min(2, {
       message: "Username must be at least 2 characters.",
     }),
   });
@@ -97,7 +97,7 @@ export function TableDemo({
             <TableHead>Status</TableHead>
             <TableHead>Method</TableHead>
             <TableHead>Amount</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

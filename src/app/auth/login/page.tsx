@@ -55,16 +55,24 @@ const LoginForm = () => {
               id="email"
               type="email"
               placeholder="m@example.com"
+              defaultValue="akshay@gmail.com"
               required
             />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" required />
+            <Input
+              id="password"
+              type="password"
+              required
+              defaultValue="Akshay"
+            />
           </div>
         </CardContent>
         <CardFooter>
-          <Button className="w-full">Sign in</Button>
+          <Button className="w-full" onClick={() => router.push("/dashboard")}>
+            Sign in
+          </Button>
         </CardFooter>
         <div className="flex justify-center">OR</div>
         <div className="flex justify-center">
