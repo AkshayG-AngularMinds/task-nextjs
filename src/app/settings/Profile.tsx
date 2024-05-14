@@ -19,7 +19,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
-// import Header from "../Header";
+import Header from "../Header";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -102,7 +102,7 @@ const Profile = () => {
   };
   return (
     <div className="items-center justify-center">
-      {/* <Header /> */}
+      {/* <Header />         */}
 
       <div className="mx-auto max-w-screen-lg">
         <CardHeader>

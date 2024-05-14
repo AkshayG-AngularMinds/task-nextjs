@@ -6,6 +6,7 @@ import { ThemeProvider } from "./ThemeProvider";
 import Header from "./Header";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,10 +20,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const router = useRouter();
-  useEffect(() => {
-    router.replace("/auth/login");
-  }, []);
+  const pathname = usePathname();
+
+  console.log(pathname);
+  // const router = useRouter();
+  // useEffect(() => {
+  //   router.replace("/auth/login");
+  // }, []);
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -31,7 +36,20 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
+          themes={[
+            "light",
+            "dark",
+            "orange",
+            "rose",
+            "green",
+            "blue",
+            "darkBlue",
+            "darkOrange",
+            "darkRose",
+            "darkGreen",
+          ]}
         >
+          {pathname && !pathname.includes("auth") && <Header />}
           {children}
         </ThemeProvider>
       </body>

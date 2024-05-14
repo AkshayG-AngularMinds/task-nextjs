@@ -41,7 +41,7 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import Header from "../Header";
+// import Header from "../Header";
 
 const Dashboard = () => {
   const [invoiceData, setInvoiceData] = useState([
@@ -188,7 +188,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <Header />
+      {/* <Header /> */}
 
       <main className="flex  flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
         <div className="">

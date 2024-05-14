@@ -46,6 +46,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export function TableDemo({
   invoices,
@@ -107,16 +114,17 @@ export function TableDemo({
               <TableCell>{invoice.paymentStatus}</TableCell>
               <TableCell>{invoice.paymentMethod}</TableCell>
               <TableCell>{invoice.totalAmount}</TableCell>
-              <TableCell className="flex">
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Pencil
-                      className="cursor-pointer"
-                      size={18}
+              <TableCell className="flex space-x-1">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="outline"
                       onClick={() => setFormValue(invoices[i])}
-                    />
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
+                    >
+                      <Pencil className="cursor-pointer" size={18} />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
                     <h2 className="font-bold text-2xl">Edit Data</h2>
 
                     <Form {...form}>
@@ -134,7 +142,7 @@ export function TableDemo({
                                 <Input
                                   placeholder="invoice"
                                   {...field}
-                                  defaultValue={formValue.invoice}
+                                  defaultValue={formValue?.invoice}
                                 />
                               </FormControl>
 
@@ -197,20 +205,30 @@ export function TableDemo({
                           )}
                         />
 
-                        <AlertDialogFooter>
-                          <AlertDialogCancel onClick={() => form.reset()}>
-                            Cancel
-                          </AlertDialogCancel>
-                          <Button type="submit">Submit</Button>
-                        </AlertDialogFooter>
+                        <DialogFooter>
+                          <DialogClose asChild>
+                            <Button
+                              type="button"
+                              variant="secondary"
+                              onClick={() => form.reset()}
+                            >
+                              Close
+                            </Button>
+                          </DialogClose>
+                          <DialogClose asChild>
+                            <Button type="submit">Submit</Button>
+                          </DialogClose>
+                        </DialogFooter>
                       </form>
                     </Form>
-                  </AlertDialogContent>
-                </AlertDialog>
-                /
+                  </DialogContent>
+                </Dialog>
+
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Trash2 className="cursor-pointer" size={18} />
+                    <Button variant="destructive">
+                      <Trash2 className="cursor-pointer" size={18} />
+                    </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>

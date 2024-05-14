@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -23,10 +23,45 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 function Header() {
-  const { setTheme } = useTheme();
   const router = useRouter();
-  const path = window.location.href;
-  // console.log(path);
+  const { setTheme, themes, resolvedTheme } = useTheme();
+
+  const [darkColors, setDarkColors] = useState([
+    "darkOrange",
+    "darkBlue",
+    "darkRose",
+    "darkGreen",
+    "dark",
+  ]);
+  const [lightColors, setLightColors] = useState([
+    "orange",
+    "blue",
+    "green",
+    "rose",
+    "light",
+  ]);
+
+  const handleTheme = (t: string) => {
+    let res = resolvedTheme || "";
+    if ((darkColors.includes(t) || darkColors.includes(res)) && t !== "light") {
+      console.log("this is dark", t, resolvedTheme);
+      if (resolvedTheme === "light") {
+        setTheme(t);
+      }
+      if (t === "orange" || resolvedTheme === "orange") setTheme("darkOrange");
+      if (t === "blue" || resolvedTheme === "blue") setTheme("darkBlue");
+      if (t === "rose" || resolvedTheme === "rose") setTheme("darkRose");
+      if (t === "green" || resolvedTheme === "green") setTheme("darkGreen");
+    } else if (lightColors.includes(t)) {
+      console.log(t);
+      if (resolvedTheme === "dark") setTheme(t);
+      console.log("this is light", t, resolvedTheme);
+      if (t === "orange" || resolvedTheme === "darkOrange") setTheme("orange");
+      if (t === "blue" || resolvedTheme === "darkBlue") setTheme("blue");
+      if (t === "rose" || resolvedTheme === "darkRose") setTheme("rose");
+      if (t === "green" || resolvedTheme === "darkGreen") setTheme("green");
+    }
+  };
   return (
     <div className="flex w-full flex-col">
       <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -68,6 +103,25 @@ function Header() {
           >
             Settings
           </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger>Themes</DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => handleTheme("orange")}>
+                Orange
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleTheme("green")}>
+                Green
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleTheme("rose")}>
+                Rose
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleTheme("blue")}>
+                Blue
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
         <Sheet>
           <SheetTrigger asChild>
@@ -134,7 +188,9 @@ function Header() {
               <DropdownMenuItem onClick={() => router.push("/profile")}>
                 Profile
               </DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push("/settings")}>
+                Settings
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => router.push("/auth/login")}>
                 Logout
@@ -150,10 +206,10 @@ function Header() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setTheme("light")}>
+              <DropdownMenuItem onClick={() => handleTheme("light")}>
                 Light
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>
+              <DropdownMenuItem onClick={() => handleTheme("dark")}>
                 Dark
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setTheme("system")}>
