@@ -79,24 +79,24 @@ function Header() {
           >
             Dashboard
           </Link>
-          <Link
+          {/* <Link
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Orders
-          </Link>
-          <Link
+          </Link> */}
+          {/* <Link
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Products
-          </Link>
-          <Link
+          </Link> */}
+          {/* <Link
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Customers
-          </Link>
+          </Link> */}
           <Link
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
@@ -104,7 +104,9 @@ function Header() {
             Settings
           </Link>
           <DropdownMenu>
-            <DropdownMenuTrigger>Themes</DropdownMenuTrigger>
+            <DropdownMenuTrigger className="text-muted-foreground transition-colors hover:text-foreground">
+              Themes
+            </DropdownMenuTrigger>
             <DropdownMenuContent>
               {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
               <DropdownMenuSeparator />

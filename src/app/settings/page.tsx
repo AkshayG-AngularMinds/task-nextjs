@@ -79,7 +79,9 @@ import {
   Code2,
   CornerDownLeft,
   LifeBuoy,
+  LockKeyhole,
   Mic,
+  Palette,
   Paperclip,
   Rabbit,
   Settings,
@@ -89,6 +91,7 @@ import {
   SquareUser,
   Triangle,
   Turtle,
+  User,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -118,6 +121,7 @@ import {
 } from "@/components/ui/tooltip";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import ChangePassword from "./ChangePassword";
+import Theme from "./Theme";
 
 const Dashboard = () => {
   const [selectedTab, setSelectedTab] = useState("profile");
@@ -133,10 +137,14 @@ const Dashboard = () => {
                   onClick={() => setSelectedTab("profile")}
                   variant="ghost"
                   size="icon"
-                  className="rounded-lg bg-muted"
+                  className={
+                    selectedTab === "profile"
+                      ? "rounded-lg bg-muted"
+                      : "rounded-lg"
+                  }
                   aria-label="Playground"
                 >
-                  <SquareTerminal className="size-5" />
+                  <User className="size-5" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="right" sideOffset={5}>
@@ -150,11 +158,15 @@ const Dashboard = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="rounded-lg"
+                  className={
+                    selectedTab === "change-theme"
+                      ? "rounded-lg bg-muted"
+                      : "rounded-lg"
+                  }
                   aria-label="Models"
                   onClick={() => setSelectedTab("change-theme")}
                 >
-                  <Bot className="size-5" />
+                  <Palette className="size-5" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="right" sideOffset={5}>
@@ -168,11 +180,15 @@ const Dashboard = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="rounded-lg"
+                  className={
+                    selectedTab === "change-password"
+                      ? "rounded-lg bg-muted"
+                      : "rounded-lg"
+                  }
                   aria-label="API"
                   onClick={() => setSelectedTab("change-password")}
                 >
-                  <Code2 className="size-5" />
+                  <LockKeyhole className="size-5" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="right" sideOffset={5}>
@@ -184,7 +200,7 @@ const Dashboard = () => {
       </aside>
       <div className="flex flex-col">
         {selectedTab === "profile" && <Profile />}
-        {selectedTab === "change-theme" && <h1>Change Theme</h1>}
+        {selectedTab === "change-theme" && <Theme />}
         {selectedTab === "change-password" && <ChangePassword />}
       </div>
     </div>

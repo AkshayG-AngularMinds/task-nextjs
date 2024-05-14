@@ -182,7 +182,7 @@ const Dashboard = () => {
     ) {
       return;
     } else {
-      setInvoices([...invoices, values]);
+      setInvoiceData([...invoiceData, values]);
     }
   };
 
@@ -304,6 +304,8 @@ const Dashboard = () => {
               pageArray={pageArray}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
+              invoiceData={invoiceData}
+              setInvoiceData={setInvoiceData}
             />
           </Card>
         </div>
