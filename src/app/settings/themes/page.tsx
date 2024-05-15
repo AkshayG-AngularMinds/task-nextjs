@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTheme } from "next-themes";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function Theme() {
   const { setTheme, themes, resolvedTheme } = useTheme();
@@ -30,10 +30,8 @@ function Theme() {
   ]);
 
   const handleTheme = (t: string) => {
-    console.log("alo");
     let res = resolvedTheme || "";
     if ((darkColors.includes(t) || darkColors.includes(res)) && t !== "light") {
-      console.log("this is dark", t, resolvedTheme);
       if (resolvedTheme === "light") {
         setTheme(t);
       }
@@ -42,23 +40,22 @@ function Theme() {
       if (t === "rose" || resolvedTheme === "rose") setTheme("darkRose");
       if (t === "green" || resolvedTheme === "green") setTheme("darkGreen");
     } else if (lightColors.includes(t)) {
-      console.log(t);
       if (resolvedTheme === "dark") setTheme(t);
-      console.log("this is light", t, resolvedTheme);
       if (t === "orange" || resolvedTheme === "darkOrange") setTheme("orange");
       if (t === "blue" || resolvedTheme === "darkBlue") setTheme("blue");
       if (t === "rose" || resolvedTheme === "darkRose") setTheme("rose");
       if (t === "green" || resolvedTheme === "darkGreen") setTheme("green");
     }
   };
+  const [currentTheme, setCurrentTheme] = useState("");
+  useEffect(() => {
+    setCurrentTheme(resolvedTheme);
+  }, [resolvedTheme]);
   return (
     <div className="m-5">
       <p className="font-bold size-7 ">Theme</p>
       <div className="flex justify-center gap-4 items-center">
-        <Select
-          onValueChange={(val) => handleTheme(val)}
-          defaultValue={resolvedTheme}
-        >
+        <Select onValueChange={(val) => handleTheme(val)} value={currentTheme}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select Theme" />
           </SelectTrigger>

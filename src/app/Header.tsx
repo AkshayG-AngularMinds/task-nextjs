@@ -146,9 +146,9 @@ function Header() {
               <DropdownMenuItem onClick={() => router.push("/profile")}>
                 Profile
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push("/settings")}>
+              {/* <DropdownMenuItem onClick={() => router.push("/settings")}>
                 Settings
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => router.push("/auth/login")}>
                 Logout
