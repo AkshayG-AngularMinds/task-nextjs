@@ -47,7 +47,7 @@ function Theme() {
       if (t === "green" || resolvedTheme === "darkGreen") setTheme("green");
     }
   };
-  const [currentTheme, setCurrentTheme] = useState("");
+  const [currentTheme, setCurrentTheme] = useState<any>("");
   useEffect(() => {
     setCurrentTheme(resolvedTheme);
   }, [resolvedTheme]);

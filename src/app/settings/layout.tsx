@@ -66,7 +66,7 @@ export default function RootLayout({
               }
               href="/settings/reset-password"
             >
-              Reset password
+              Change password
             </Link>
           </nav>
           <div className="grid gap-6">

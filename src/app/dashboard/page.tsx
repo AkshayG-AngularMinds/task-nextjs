@@ -65,9 +65,9 @@ const Dashboard = () => {
   const [invoiceData, setInvoiceData] = useState(data);
   const [searchStr, setSearchStr] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
-  const [invoices, setInvoices] = useState([]);
-  const [totalPages, setTotalPages] = useState();
-  const [pageArray, setPageArray] = useState([]);
+  const [invoices, setInvoices] = useState<any>([]);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [pageArray, setPageArray] = useState<any>([]);
 
   // for filtering data
   const [filterValue, setFilterValue] = useState("");
@@ -125,7 +125,7 @@ const Dashboard = () => {
     }),
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: any) => {
     console.log(values);
     if (
       values.invoice === undefined ||
@@ -180,7 +180,9 @@ const Dashboard = () => {
                     <DropdownMenuLabel>Filter by</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuCheckboxItem
-                      onClick={() => setFilterValue("All")}
+                      onClick={() => {
+                        setFilterValue("All");
+                      }}
                       checked={filterValue === "All" ? true : false}
                     >
                       All

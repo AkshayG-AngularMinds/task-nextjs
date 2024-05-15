@@ -59,7 +59,7 @@ const Profile = () => {
       message: "Username must be at least 2 characters.",
     }),
   });
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: any) => {
     // console.log(values);
     if (values.country === undefined) {
       values.country = address.country;
@@ -77,7 +77,7 @@ const Profile = () => {
 
     setAddress(values);
   };
-  const onSubmit2 = (values: z.infer<typeof formSchema>) => {
+  const onSubmit2 = (values: any) => {
     if (values.firstName === undefined) {
       values.firstName = personalData.firstName;
     }

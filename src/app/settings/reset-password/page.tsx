@@ -31,11 +31,11 @@ const ChangePassword = () => {
     <div className="flex justify-center items-center">
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Reset your password</CardTitle>
+          <CardTitle className="text-2xl">Change your password</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="email">Current password</Label>
+            <Label htmlFor="email">Old password</Label>
             <Input
               id="currentPassword"
               type="currentPassword"
