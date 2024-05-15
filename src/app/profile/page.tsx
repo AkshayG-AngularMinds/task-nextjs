@@ -20,13 +20,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 // import Header from "../Header";
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+
 import {
   Form,
   FormControl,
@@ -35,8 +29,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { z } from "zod";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Profile = () => {
   const form = useForm();
@@ -103,14 +103,13 @@ const Profile = () => {
   return (
     <div className="items-center justify-center">
       {/* <Header /> */}
-
       <div className="mx-auto max-w-screen-lg">
         <CardHeader>
           <CardTitle className="text-xl">My profile</CardTitle>
         </CardHeader>
         <CardContent>
           <Card className="flex p-3">
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justiflexfy-center">
               <Avatar className="h-20 w-20">
                 {/* <AvatarImage src="https://en.wikipedia.org/wiki/Virat_Kohli#/media/File:Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg" /> */}
                 <AvatarFallback>AG</AvatarFallback>
@@ -176,13 +175,13 @@ const Profile = () => {
                 </p>
               </div>
               <div className="col-span-1 md:col-span-2 lg:col-span-1">
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
+                <Dialog>
+                  <DialogTrigger asChild>
                     <Button variant={"outline"} className="float-right">
                       Edit
                     </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
+                  </DialogTrigger>
+                  <DialogContent>
                     <h2 className="font-bold text-2xl">
                       Edit Personal Details
                     </h2>
@@ -307,18 +306,18 @@ const Profile = () => {
                             )}
                           />
                         </div>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel onClick={() => form.reset()}>
+                        <DialogFooter>
+                          <DialogClose onClick={() => form.reset()}>
                             Cancel
-                          </AlertDialogCancel>
-                          <AlertDialogAction>
-                            <Button type="submit">Submit</Button>
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
+                          </DialogClose>
+                          <DialogClose>
+                            <Button type="submit">Submitfd</Button>
+                          </DialogClose>
+                        </DialogFooter>
                       </form>
                     </Form>
-                  </AlertDialogContent>
-                </AlertDialog>
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           </Card>
@@ -354,13 +353,13 @@ const Profile = () => {
                 </p>
               </div>
               <div className="col-span-1 md:col-span-2 lg:col-span-1">
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
+                <Dialog>
+                  <DialogTrigger asChild>
                     <Button variant={"outline"} className="float-right">
                       Edit
                     </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
+                  </DialogTrigger>
+                  <DialogContent>
                     <h2 className="font-bold text-2xl">Edit Data</h2>
 
                     <Form {...form}>
@@ -441,18 +440,18 @@ const Profile = () => {
                           )}
                         />
 
-                        <AlertDialogFooter>
-                          <AlertDialogCancel onClick={() => form.reset()}>
+                        <DialogFooter>
+                          <DialogClose onClick={() => form.reset()}>
                             Cancel
-                          </AlertDialogCancel>
-                          <AlertDialogAction>
+                          </DialogClose>
+                          <DialogClose>
                             <Button type="submit">Submit</Button>
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
+                          </DialogClose>
+                        </DialogFooter>
                       </form>
                     </Form>
-                  </AlertDialogContent>
-                </AlertDialog>
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           </Card>

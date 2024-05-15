@@ -57,7 +57,7 @@ function Theme() {
       <div className="flex justify-center gap-4 items-center">
         <Select
           onValueChange={(val) => handleTheme(val)}
-          // defaultValue={resolvedTheme}
+          defaultValue={resolvedTheme}
         >
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select Theme" />
@@ -80,6 +80,14 @@ function Theme() {
               <div className="flex items-center justify-center">
                 <SelectItem value="blue">Blue</SelectItem>
                 <div className="flex h-4 w-5 items-center justify-center rounded-full bg-blue-500"></div>
+              </div>
+              <div className="flex items-center justify-center">
+                <SelectItem value="light">Light </SelectItem>
+                <div className="flex h-4 w-5 items-center justify-center rounded-full bg-white"></div>
+              </div>
+              <div className="flex items-center justify-center">
+                <SelectItem value="dark">Dark</SelectItem>
+                <div className="flex h-4 w-5 items-center justify-center rounded-full bg-black"></div>
               </div>
             </SelectGroup>
           </SelectContent>

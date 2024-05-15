@@ -325,11 +325,6 @@ const Dashboard = () => {
           </Card>
         </div>
       </main>
-      <footer className={"text-gray-700"}>
-        <div className="container mx-auto py-2 px-4">
-          <p className="text-center">© Desinged by Angularminds</p>
-        </div>
-      </footer>
     </div>
   );
 };

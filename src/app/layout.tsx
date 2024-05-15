@@ -51,6 +51,13 @@ export default function RootLayout({
         >
           {pathname && !pathname.includes("auth") && <Header />}
           {children}
+          {pathname && !pathname.includes("auth") && (
+            <footer className={"text-gray-700"}>
+              <div className="container mx-auto py-2 px-4">
+                <p className="text-center">© Desinged by Angularminds</p>
+              </div>
+            </footer>
+          )}
         </ThemeProvider>
       </body>
     </html>
