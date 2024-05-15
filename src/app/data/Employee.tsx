@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/table";
 
 import { Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -64,6 +64,8 @@ import {
 export function TableDemo({
   invoices,
   setInvoices,
+  invoiceData,
+  setInvoiceData,
   handlePrevPage,
   handleNextPage,
   pageArray,
@@ -132,7 +134,7 @@ export function TableDemo({
                     </Button>
                   </DialogTrigger>
                   <DialogContent>
-                    <h2 className="font-bold text-2xl">Edit Data</h2>
+                    <h2 className="font-bold text-2xl">Edit Invoice</h2>
 
                     <Form {...form}>
                       <form
@@ -175,24 +177,7 @@ export function TableDemo({
                             </FormItem>
                           )}
                         />
-                        {/* <FormField
-                          control={form.control}
-                          name="paymentStatus"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Status</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="status"
-                                  {...field}
-                                  defaultValue={formValue?.paymentStatus}
-                                />
-                              </FormControl>
 
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        /> */}
                         <FormField
                           control={form.control}
                           name="paymentStatus"
@@ -215,6 +200,7 @@ export function TableDemo({
                                   <SelectItem value="Pending">
                                     Pending
                                   </SelectItem>
+                                  <SelectItem value="Unpaid">Unpaid</SelectItem>
                                 </SelectContent>
                               </Select>
 
@@ -280,8 +266,8 @@ export function TableDemo({
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
                       <AlertDialogAction
                         onClick={() =>
-                          setInvoices(
-                            invoices.filter(
+                          setInvoiceData(
+                            invoiceData.filter(
                               (inv: any) => inv.invoice !== invoice.invoice
                             )
                           )

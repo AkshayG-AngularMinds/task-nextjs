@@ -1,6 +1,14 @@
 "use client";
 import Link from "next/link";
-import { CircleUser, Menu, Moon, Package2, Search, Sun } from "lucide-react";
+import {
+  CircleUser,
+  ListFilter,
+  Menu,
+  Moon,
+  Package2,
+  Search,
+  Sun,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,6 +21,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -23,7 +32,6 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { TableDemo } from "../data/Employee";
 import { useEffect, useState } from "react";
-
 import {
   Form,
   FormControl,
@@ -51,99 +59,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 // import Header from "../Header";
+import { data } from "./invoiceData";
 
 const Dashboard = () => {
-  const [invoiceData, setInvoiceData] = useState([
-    {
-      invoice: "inv001",
-      paymentStatus: "Paid",
-      totalAmount: "$250.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "inv002",
-      paymentStatus: "Pending",
-      totalAmount: "$150.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "inv003",
-      paymentStatus: "Unpaid",
-      totalAmount: "$350.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "inv004",
-      paymentStatus: "Paid",
-      totalAmount: "$450.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "inv005",
-      paymentStatus: "Paid",
-      totalAmount: "$550.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "inv006",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "inv007",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "inv008",
-      paymentStatus: "Paid",
-      totalAmount: "$250.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "inv009",
-      paymentStatus: "Pending",
-      totalAmount: "$150.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "inv010",
-      paymentStatus: "Unpaid",
-      totalAmount: "$350.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "inv011",
-      paymentStatus: "Paid",
-      totalAmount: "$450.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "inv012",
-      paymentStatus: "Paid",
-      totalAmount: "$550.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "inv013",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "inv014",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
-      paymentMethod: "Credit Card",
-    },
-  ]);
+  const [invoiceData, setInvoiceData] = useState(data);
   const [searchStr, setSearchStr] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [invoices, setInvoices] = useState([]);
   const [totalPages, setTotalPages] = useState();
   const [pageArray, setPageArray] = useState([]);
+
+  // for filtering data
+  const [filterValue, setFilterValue] = useState("");
+  useEffect(() => {
+    if (filterValue.length > 0) {
+      setInvoiceData(
+        data.filter((inv) => {
+          return inv.paymentStatus === filterValue;
+        })
+      );
+    }
+  }, [filterValue]);
   let totalItemsPerPage = 5;
   const displayItems = (): any => {
     let start = currentPage * totalItemsPerPage;
@@ -158,9 +94,12 @@ const Dashboard = () => {
   };
   useEffect(() => {
     displayItems();
-  }, [searchStr, currentPage]);
+  }, [searchStr, currentPage, invoiceData]);
   useEffect(() => {
     setTotalPages(Math.ceil(invoiceData.length / totalItemsPerPage));
+  }, [invoiceData]);
+  useEffect(() => {
+    setInvoiceData(data);
   }, []);
   useEffect(() => {
     setPageArray(Array.from({ length: totalPages }, () => 1));
@@ -221,9 +160,45 @@ const Dashboard = () => {
                   }}
                 />
               </div>
+              <div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="m-2" asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-1 text-sm h-10"
+                    >
+                      <ListFilter className=" w-3.5" />
+                      <span className="sr-only sm:not-sr-only">Filter</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuCheckboxItem
+                      checked={filterValue === "Paid" ? true : false}
+                      onClick={() => setFilterValue("Paid")}
+                    >
+                      Paid
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      onClick={() => setFilterValue("Unpaid")}
+                      checked={filterValue === "Unpaid" ? true : false}
+                    >
+                      Unpaid
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      onClick={() => setFilterValue("Pending")}
+                      checked={filterValue === "Pending" ? true : false}
+                    >
+                      Pending
+                    </DropdownMenuCheckboxItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button className="ml-auto">Add Invoice</Button>
+                  <Button className="ml-auto">Add invoice</Button>
                 </DialogTrigger>
                 <DialogContent>
                   <h2 className="font-bold text-2xl">Add Invoice</h2>
@@ -264,20 +239,7 @@ const Dashboard = () => {
                           </FormItem>
                         )}
                       />
-                      {/* <FormField
-                        control={form.control}
-                        name="paymentStatus"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Status</FormLabel>
-                            <FormControl>
-                              <Input placeholder="status" {...field} />
-                            </FormControl>
 
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      /> */}
                       <FormField
                         control={form.control}
                         name="paymentStatus"
@@ -296,6 +258,7 @@ const Dashboard = () => {
                               <SelectContent>
                                 <SelectItem value="Paid">Paid</SelectItem>
                                 <SelectItem value="Pending">Pending</SelectItem>
+                                <SelectItem value="Unpaid">Unpaid</SelectItem>
                               </SelectContent>
                             </Select>
 
