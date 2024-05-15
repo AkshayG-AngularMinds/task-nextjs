@@ -73,11 +73,15 @@ const Dashboard = () => {
   const [filterValue, setFilterValue] = useState("");
   useEffect(() => {
     if (filterValue.length > 0) {
-      setInvoiceData(
-        data.filter((inv) => {
-          return inv.paymentStatus === filterValue;
-        })
-      );
+      if (filterValue === "All") {
+        setInvoiceData(data);
+      } else {
+        setInvoiceData(
+          data.filter((inv) => {
+            return inv.paymentStatus === filterValue;
+          })
+        );
+      }
     }
   }, [filterValue]);
   let totalItemsPerPage = 5;
@@ -153,10 +157,10 @@ const Dashboard = () => {
                   onChange={(e) => {
                     let searchValue = e.target.value;
                     setSearchStr(searchValue);
-                    searchValue = searchValue.trim();
-                    if (searchValue === "") {
-                      setInvoices(invoiceData);
-                    }
+                    // searchValue = searchValue.trim();
+                    // if (searchValue === "") {
+                    //   setInvoices(invoiceData);
+                    // }
                   }}
                 />
               </div>
@@ -175,6 +179,12 @@ const Dashboard = () => {
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Filter by</DropdownMenuLabel>
                     <DropdownMenuSeparator />
+                    <DropdownMenuCheckboxItem
+                      onClick={() => setFilterValue("All")}
+                      checked={filterValue === "All" ? true : false}
+                    >
+                      All
+                    </DropdownMenuCheckboxItem>
                     <DropdownMenuCheckboxItem
                       checked={filterValue === "Paid" ? true : false}
                       onClick={() => setFilterValue("Paid")}

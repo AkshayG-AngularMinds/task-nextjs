@@ -12,6 +12,7 @@ import {
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -59,8 +60,13 @@ const LoginForm = () => {
               required
             />
           </div>
-          <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
+          <div className="grid gap-2 mt-2">
+            <div className="flex items-center">
+              <Label htmlFor="password">Password</Label>
+              <Link href="#" className="ml-auto inline-block text-sm underline">
+                Forgot your password?
+              </Link>
+            </div>
             <Input
               id="password"
               type="password"

@@ -22,7 +22,6 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
 
-  console.log(pathname);
   // const router = useRouter();
   // useEffect(() => {
   //   router.replace("/auth/login");
@@ -47,6 +46,7 @@ export default function RootLayout({
             "darkOrange",
             "darkRose",
             "darkGreen",
+            "system",
           ]}
         >
           {pathname && !pathname.includes("auth") && <Header />}

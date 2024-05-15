@@ -1,41 +1,55 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import React from "react";
 
-const LoginForm = () => {
+const ForgotPasswordCard = () => {
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    // Handle form submission
+  };
+
   return (
-    <div className="flex justify-center items-center h-screen">
-      <Card className="w-full max-w-sm">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <Card className="w-full max-w-md p-4">
         <CardHeader>
-          <CardTitle className="text-2xl">Reset account password</CardTitle>
+          <CardTitle>Forgot Password</CardTitle>
           <CardDescription>
-            Enter a new password for noreply@shopify.com.
+            Enter your email address to reset your password.
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" required />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="password">Confirm password</Label>
-            <Input id="password" type="password" required />
-          </div>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email address
+              </label>
+              <Input
+                id="email"
+                type="email"
+                required
+                placeholder="you@example.com"
+                className="mt-1 block w-full"
+              />
+            </div>
+            <Button type="submit" className="w-full">
+              Send Reset Link
+            </Button>
+          </form>
         </CardContent>
-        <CardFooter>
-          <Button className="w-full">Reset password</Button>
-        </CardFooter>
       </Card>
     </div>
   );
 };
 
-export default LoginForm;
+export default ForgotPasswordCard;

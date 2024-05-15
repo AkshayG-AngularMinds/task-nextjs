@@ -21,10 +21,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 function Header() {
   const router = useRouter();
   const { setTheme, themes, resolvedTheme } = useTheme();
+  const pathname = usePathname();
 
   const [darkColors, setDarkColors] = useState([
     "darkOrange",
@@ -75,55 +76,25 @@ function Header() {
           </Link>
           <Link
             href="/dashboard"
-            className="text-foreground transition-colors hover:text-foreground"
+            className={
+              pathname.includes("dashboard")
+                ? "text-foreground transition-colors hover:text-foreground"
+                : "text-muted-foreground transition-colors hover:text-foreground"
+            }
           >
             Dashboard
           </Link>
-          {/* <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Orders
-          </Link> */}
-          {/* <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Products
-          </Link> */}
-          {/* <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Customers
-          </Link> */}
+
           <Link
-            href="#"
-            className="text-muted-foreground transition-colors hover:text-foreground"
+            href="/settings/profile"
+            className={
+              pathname.includes("settings")
+                ? "text-foreground transition-colors hover:text-foreground"
+                : "text-muted-foreground transition-colors hover:text-foreground"
+            }
           >
             Settings
           </Link>
-          <DropdownMenu>
-            <DropdownMenuTrigger className="text-muted-foreground transition-colors hover:text-foreground">
-              Themes
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => handleTheme("orange")}>
-                Orange
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleTheme("green")}>
-                Green
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleTheme("rose")}>
-                Rose
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleTheme("blue")}>
-                Blue
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </nav>
         <Sheet>
           <SheetTrigger asChild>
@@ -155,21 +126,6 @@ function Header() {
                 href="#"
                 className="text-muted-foreground hover:text-foreground"
               >
-                Orders
-              </Link>
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Products
-              </Link>
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Customers
-              </Link>
-              <Link href="#" className="hover:text-foreground">
                 Settings
               </Link>
             </nav>

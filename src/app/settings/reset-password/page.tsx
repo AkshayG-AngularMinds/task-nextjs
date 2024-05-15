@@ -20,6 +20,7 @@ const ChangePassword = () => {
     password: "",
     confirmPassword: "",
   });
+  const [currentPassword, setCurrentPassword] = useState("");
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -27,13 +28,23 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Reset your password</CardTitle>
-          <CardDescription>Enter new password</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="email">Current password</Label>
+            <Input
+              id="currentPassword"
+              type="currentPassword"
+              placeholder="Enter current passowrd"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              required
+            />
+          </div>
           <div className="grid gap-2">
             <Label htmlFor="email">Enter new password</Label>
             <Input
