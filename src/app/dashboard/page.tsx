@@ -23,14 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { TableDemo } from "../data/Employee";
 import { useEffect, useState } from "react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+
 import {
   Form,
   FormControl,
@@ -41,6 +34,22 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 // import Header from "../Header";
 
 const Dashboard = () => {
@@ -174,6 +183,7 @@ const Dashboard = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values);
     if (
       values.invoice === undefined ||
       values.paymentMethod === undefined ||
@@ -183,6 +193,7 @@ const Dashboard = () => {
       return;
     } else {
       setInvoiceData([...invoiceData, values]);
+      form.reset();
     }
   };
 
@@ -195,7 +206,7 @@ const Dashboard = () => {
           <Card>
             <div className="flex justify-between items-center m-2">
               <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-2.5 top-2.5 w-4 text-muted-foreground" />
                 <Input
                   type="search"
                   placeholder="Search products..."
@@ -210,12 +221,12 @@ const Dashboard = () => {
                   }}
                 />
               </div>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button className="ml-auto">Add Data</Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <h2 className="font-bold text-2xl">Add Data</h2>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="ml-auto">Add Invoice</Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <h2 className="font-bold text-2xl">Add Invoice</h2>
                   <Form {...form}>
                     <form
                       onSubmit={form.handleSubmit(onSubmit)}
@@ -253,7 +264,7 @@ const Dashboard = () => {
                           </FormItem>
                         )}
                       />
-                      <FormField
+                      {/* <FormField
                         control={form.control}
                         name="paymentStatus"
                         render={({ field }) => (
@@ -262,6 +273,31 @@ const Dashboard = () => {
                             <FormControl>
                               <Input placeholder="status" {...field} />
                             </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      /> */}
+                      <FormField
+                        control={form.control}
+                        name="paymentStatus"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select status" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="Paid">Paid</SelectItem>
+                                <SelectItem value="Pending">Pending</SelectItem>
+                              </SelectContent>
+                            </Select>
 
                             <FormMessage />
                           </FormItem>
@@ -282,18 +318,24 @@ const Dashboard = () => {
                         )}
                       />
 
-                      <AlertDialogFooter>
-                        <AlertDialogCancel onClick={() => form.reset()}>
-                          Cancel
-                        </AlertDialogCancel>
-                        <AlertDialogAction type="submit">
-                          Submit
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
+                      <DialogFooter>
+                        <DialogClose asChild onClick={() => form.reset()}>
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            // onClick={() => form.reset()}
+                          >
+                            Close
+                          </Button>
+                        </DialogClose>
+                        <DialogClose asChild>
+                          <Button type="submit">Submit</Button>
+                        </DialogClose>
+                      </DialogFooter>
                     </form>
                   </Form>
-                </AlertDialogContent>
-              </AlertDialog>
+                </DialogContent>
+              </Dialog>
             </div>
 
             <TableDemo

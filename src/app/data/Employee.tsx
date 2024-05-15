@@ -53,6 +53,13 @@ import {
   DialogFooter,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function TableDemo({
   invoices,
@@ -168,7 +175,7 @@ export function TableDemo({
                             </FormItem>
                           )}
                         />
-                        <FormField
+                        {/* <FormField
                           control={form.control}
                           name="paymentStatus"
                           render={({ field }) => (
@@ -181,6 +188,35 @@ export function TableDemo({
                                   defaultValue={formValue?.paymentStatus}
                                 />
                               </FormControl>
+
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        /> */}
+                        <FormField
+                          control={form.control}
+                          name="paymentStatus"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Email</FormLabel>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={
+                                  field.value || formValue?.paymentStatus
+                                }
+                              >
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select status" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="Paid">Paid</SelectItem>
+                                  <SelectItem value="Pending">
+                                    Pending
+                                  </SelectItem>
+                                </SelectContent>
+                              </Select>
 
                               <FormMessage />
                             </FormItem>
