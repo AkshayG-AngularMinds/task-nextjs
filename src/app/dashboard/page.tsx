@@ -70,20 +70,7 @@ const Dashboard = () => {
   const [pageArray, setPageArray] = useState<any>([]);
 
   // for filtering data
-  const [filterValue, setFilterValue] = useState("");
-  useEffect(() => {
-    if (filterValue.length > 0) {
-      if (filterValue === "All") {
-        setInvoiceData(data);
-      } else {
-        setInvoiceData(
-          data.filter((inv) => {
-            return inv.paymentStatus === filterValue;
-          })
-        );
-      }
-    }
-  }, [filterValue]);
+
   let totalItemsPerPage = 5;
   const displayItems = (): any => {
     let start = currentPage * totalItemsPerPage;
@@ -140,6 +127,22 @@ const Dashboard = () => {
     }
   };
 
+  const [showStatusBar, setShowStatusBar] = useState<any>(true);
+  const [showActivityBar, setShowActivityBar] = useState<any>(false);
+  const [showPanel, setShowPanel] = useState<any>(false);
+  let [filterArray, setFilterArray] = useState([]);
+
+  useEffect(() => {
+    if (filterArray && filterArray.length > 0) {
+      setInvoiceData(
+        data.filter((d) => {
+          return filterArray.includes(d.paymentStatus);
+        })
+      );
+    } else {
+      setInvoiceData(data);
+    }
+  }, [filterArray]);
   return (
     <div className="flex min-h-screen w-full flex-col">
       {/* <Header /> */}
@@ -157,10 +160,6 @@ const Dashboard = () => {
                   onChange={(e) => {
                     let searchValue = e.target.value;
                     setSearchStr(searchValue);
-                    // searchValue = searchValue.trim();
-                    // if (searchValue === "") {
-                    //   setInvoices(invoiceData);
-                    // }
                   }}
                 />
               </div>
@@ -179,35 +178,90 @@ const Dashboard = () => {
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Filter by</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem
+                    {/* <DropdownMenuCheckboxItem
                       onClick={() => {
-                        setFilterValue("All");
+                        setFilterArray([...filterArray, "All"]);
                       }}
-                      checked={filterValue === "All" ? true : false}
+                      checked={filterArray.includes("All") ? true : false}
                     >
                       All
-                    </DropdownMenuCheckboxItem>
+                    </DropdownMenuCheckboxItem> */}
                     <DropdownMenuCheckboxItem
-                      checked={filterValue === "Paid" ? true : false}
-                      onClick={() => setFilterValue("Paid")}
+                      checked={filterArray.includes("Paid") ? true : false}
+                      onClick={() => {
+                        if (filterArray.includes("Paid")) {
+                          setFilterArray(
+                            filterArray.filter((arr) => !arr.includes("Paid"))
+                          );
+                        } else {
+                          setFilterArray([...filterArray, "Paid"]);
+                        }
+                      }}
                     >
                       Paid
                     </DropdownMenuCheckboxItem>
                     <DropdownMenuCheckboxItem
-                      onClick={() => setFilterValue("Unpaid")}
-                      checked={filterValue === "Unpaid" ? true : false}
+                      onClick={() => {
+                        if (filterArray.includes("Unpaid")) {
+                          setFilterArray(
+                            filterArray.filter((arr) => !arr.includes("Unpaid"))
+                          );
+                        } else {
+                          setFilterArray([...filterArray, "Unpaid"]);
+                        }
+                      }}
+                      checked={filterArray.includes("Unpaid") ? true : false}
                     >
                       Unpaid
                     </DropdownMenuCheckboxItem>
                     <DropdownMenuCheckboxItem
-                      onClick={() => setFilterValue("Pending")}
-                      checked={filterValue === "Pending" ? true : false}
+                      onClick={() => {
+                        if (filterArray.includes("Pending")) {
+                          setFilterArray(
+                            filterArray.filter(
+                              (arr) => !arr.includes("Pending")
+                            )
+                          );
+                        } else {
+                          setFilterArray([...filterArray, "Pending"]);
+                        }
+                      }}
+                      checked={filterArray.includes("Pending") ? true : false}
                     >
                       Pending
                     </DropdownMenuCheckboxItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
+              {/* <div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline">Open</Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuCheckboxItem
+                      checked={showStatusBar}
+                      onCheckedChange={setShowStatusBar}
+                    >
+                      Status Bar
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={showActivityBar}
+                      onCheckedChange={setShowActivityBar}
+                    >
+                      Activity Bar
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={showPanel}
+                      onCheckedChange={setShowPanel}
+                    >
+                      Panel
+                    </DropdownMenuCheckboxItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div> */}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button className="ml-auto">Add invoice</Button>

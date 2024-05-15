@@ -117,13 +117,13 @@ function Header() {
                 <span className="sr-only">Acme Inc</span>
               </Link>
               <Link
-                href="#"
+                href="/dashboard"
                 className="text-muted-foreground hover:text-foreground"
               >
                 Dashboard
               </Link>
               <Link
-                href="#"
+                href="/settings/profile"
                 className="text-muted-foreground hover:text-foreground"
               >
                 Settings
@@ -146,9 +146,7 @@ function Header() {
               <DropdownMenuItem onClick={() => router.push("/profile")}>
                 Profile
               </DropdownMenuItem>
-              {/* <DropdownMenuItem onClick={() => router.push("/settings")}>
-                Settings
-              </DropdownMenuItem> */}
+
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => router.push("/auth/login")}>
                 Logout
