@@ -137,12 +137,12 @@ const Dashboard = () => {
   const [showStatusBar, setShowStatusBar] = useState<any>(true);
   const [showActivityBar, setShowActivityBar] = useState<any>(false);
   const [showPanel, setShowPanel] = useState<any>(false);
-  let [filterArray, setFilterArray] = useState([]);
+  let [filterArray, setFilterArray] = useState<any>([]);
 
   useEffect(() => {
     if (filterArray && filterArray.length > 0) {
       setInvoiceData(
-        data.filter((d) => {
+        data.filter((d: any) => {
           return filterArray.includes(d.paymentStatus);
         })
       );
@@ -191,7 +191,9 @@ const Dashboard = () => {
                       onClick={() => {
                         if (filterArray.includes("Paid")) {
                           setFilterArray(
-                            filterArray.filter((arr) => !arr.includes("Paid"))
+                            filterArray.filter(
+                              (arr: any) => !arr.includes("Paid")
+                            )
                           );
                         } else {
                           setFilterArray([...filterArray, "Paid"]);
@@ -204,7 +206,9 @@ const Dashboard = () => {
                       onClick={() => {
                         if (filterArray.includes("Unpaid")) {
                           setFilterArray(
-                            filterArray.filter((arr) => !arr.includes("Unpaid"))
+                            filterArray.filter(
+                              (arr: any) => !arr.includes("Unpaid")
+                            )
                           );
                         } else {
                           setFilterArray([...filterArray, "Unpaid"]);
@@ -219,7 +223,7 @@ const Dashboard = () => {
                         if (filterArray.includes("Pending")) {
                           setFilterArray(
                             filterArray.filter(
-                              (arr) => !arr.includes("Pending")
+                              (arr: any) => !arr.includes("Pending")
                             )
                           );
                         } else {
@@ -234,13 +238,15 @@ const Dashboard = () => {
                 </DropdownMenu>
               </div>
               {filterArray &&
-                filterArray.map((ele) => {
+                filterArray.map((ele: any) => {
                   return (
                     <Button size="sm" variant="secondary" className="m-1">
                       {ele}
                       <X
                         onClick={() =>
-                          setFilterArray(filterArray.filter((ar) => ar != ele))
+                          setFilterArray(
+                            filterArray.filter((ar: any) => ar != ele)
+                          )
                         }
                         className="text-red-500 cursor-pointer"
                       />
@@ -252,12 +258,13 @@ const Dashboard = () => {
                   Clear
                 </Button>
               )}
-              <Dialog>
+              <Dialog onOpenChange={() => form.reset()}>
                 <DialogTrigger asChild>
                   <Button className="ml-auto">Add invoice</Button>
                 </DialogTrigger>
                 <DialogContent>
                   <h2 className="font-bold text-2xl">Add Invoice</h2>
+
                   <Form {...form}>
                     <form
                       onSubmit={form.handleSubmit(onSubmit)}

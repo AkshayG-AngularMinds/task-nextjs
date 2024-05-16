@@ -74,14 +74,14 @@ export function TableDemo({
 }: any) {
   const form = useForm();
 
-  const [formValue, setFormValue] = useState();
+  const [formValue, setFormValue] = useState<any>();
   const formSchema = z.object({
     country: z.string().min(2, {
       message: "Username must be at least 2 characters.",
     }),
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: any) => {
     if (values.invoice === undefined) {
       values.invoice = formValue.invoice;
     }
@@ -94,7 +94,7 @@ export function TableDemo({
     if (values.totalAmount === undefined) {
       values.totalAmount = formValue.totalAmount;
     }
-    let newInvoices = invoices.map((inv) => {
+    let newInvoices = invoices.map((inv: any) => {
       if (inv.invoice == formValue.invoice) {
         return values;
       }
@@ -124,7 +124,7 @@ export function TableDemo({
               <TableCell>{invoice.paymentMethod}</TableCell>
               <TableCell>{invoice.totalAmount}</TableCell>
               <TableCell className="flex space-x-1">
-                <Dialog>
+                <Dialog onOpenChange={() => form.reset()}>
                   <DialogTrigger asChild>
                     <Button
                       variant="outline"
@@ -283,31 +283,32 @@ export function TableDemo({
           ))}
         </TableBody>
       </Table>
-      <Pagination className="flex justify-end">
-        <PaginationContent>
-          <PaginationItem className="cursor-pointer">
-            <PaginationPrevious onClick={handlePrevPage} />
-          </PaginationItem>
-
-          {pageArray?.map((p: any, i: number) => (
-            <PaginationItem>
-              <PaginationLink
-                isActive={currentPage === i ? true : false}
-                onClick={() => setCurrentPage(i)}
-              >
-                {i + 1}
-              </PaginationLink>
+      {invoices && invoices.length ? (
+        <Pagination className="flex justify-end">
+          <PaginationContent>
+            <PaginationItem className="cursor-pointer">
+              <PaginationPrevious onClick={handlePrevPage} />
             </PaginationItem>
-          ))}
 
-          {/* <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem> */}
-          <PaginationItem className="cursor-pointer">
-            <PaginationNext onClick={handleNextPage} />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+            {pageArray?.map((p: any, i: number) => (
+              <PaginationItem>
+                <PaginationLink
+                  isActive={currentPage === i ? true : false}
+                  onClick={() => setCurrentPage(i)}
+                >
+                  {i + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            <PaginationItem className="cursor-pointer">
+              <PaginationNext onClick={handleNextPage} />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
