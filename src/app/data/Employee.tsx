@@ -130,7 +130,7 @@ export function TableDemo({
                       variant="outline"
                       onClick={() => setFormValue(invoices[i])}
                     >
-                      <Pencil className="cursor-pointer" size={18} />
+                      <Pencil className="cursor-pointer" size={13} />
                     </Button>
                   </DialogTrigger>
                   <DialogContent>
@@ -247,9 +247,9 @@ export function TableDemo({
                 </Dialog>
 
                 <AlertDialog>
-                  <AlertDialogTrigger asChild>
+                  <AlertDialogTrigger asChild className="gap-5">
                     <Button variant="destructive">
-                      <Trash2 className="cursor-pointer" size={18} />
+                      <Trash2 className="cursor-pointer" size={13} />
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>

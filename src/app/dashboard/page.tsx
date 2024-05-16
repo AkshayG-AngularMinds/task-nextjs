@@ -8,6 +8,7 @@ import {
   Package2,
   Search,
   Sun,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -105,6 +106,7 @@ const Dashboard = () => {
   const [btnDisable, setBtnDisable] = useState(true);
   const form = useForm();
 
+  const { register } = useForm();
   const [formValue, setFormValue] = useState();
   const formSchema = z.object({
     invoice: z.string().min(2, {
@@ -178,14 +180,7 @@ const Dashboard = () => {
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Filter by</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    {/* <DropdownMenuCheckboxItem
-                      onClick={() => {
-                        setFilterArray([...filterArray, "All"]);
-                      }}
-                      checked={filterArray.includes("All") ? true : false}
-                    >
-                      All
-                    </DropdownMenuCheckboxItem> */}
+
                     <DropdownMenuCheckboxItem
                       checked={filterArray.includes("Paid") ? true : false}
                       onClick={() => {
@@ -233,35 +228,25 @@ const Dashboard = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              {/* <div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline">Open</Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56">
-                    <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem
-                      checked={showStatusBar}
-                      onCheckedChange={setShowStatusBar}
-                    >
-                      Status Bar
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem
-                      checked={showActivityBar}
-                      onCheckedChange={setShowActivityBar}
-                    >
-                      Activity Bar
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem
-                      checked={showPanel}
-                      onCheckedChange={setShowPanel}
-                    >
-                      Panel
-                    </DropdownMenuCheckboxItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div> */}
+              {filterArray &&
+                filterArray.map((ele) => {
+                  return (
+                    <Button size="sm" variant="secondary" className="m-1">
+                      {ele}
+                      <X
+                        onClick={() =>
+                          setFilterArray(filterArray.filter((ar) => ar != ele))
+                        }
+                        className="text-red-500 cursor-pointer"
+                      />
+                    </Button>
+                  );
+                })}
+              {filterArray && filterArray.length > 0 && (
+                <Button size="sm" onClick={() => setFilterArray([])}>
+                  Clear
+                </Button>
+              )}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button className="ml-auto">Add invoice</Button>
@@ -280,11 +265,7 @@ const Dashboard = () => {
                           <FormItem>
                             <FormLabel>Invoice</FormLabel>
                             <FormControl>
-                              <Input
-                                placeholder="invoice"
-                                {...field}
-                                // defaultValue={formValue.invoice}
-                              />
+                              <Input placeholder="invoice" {...field} />
                             </FormControl>
 
                             <FormMessage />
@@ -348,12 +329,8 @@ const Dashboard = () => {
                       />
 
                       <DialogFooter>
-                        <DialogClose asChild onClick={() => form.reset()}>
-                          <Button
-                            type="button"
-                            variant="secondary"
-                            // onClick={() => form.reset()}
-                          >
+                        <DialogClose onClick={() => form.reset()}>
+                          <Button type="button" variant="secondary">
                             Close
                           </Button>
                         </DialogClose>

@@ -49,15 +49,29 @@ function Theme() {
   };
   const [currentTheme, setCurrentTheme] = useState<any>("");
   useEffect(() => {
-    setCurrentTheme(resolvedTheme);
+    setCurrentTheme(
+      resolvedTheme === "darkBlue"
+        ? "Blue"
+        : resolvedTheme === "darkOrange"
+        ? "Orange"
+        : resolvedTheme === "darkGreen"
+        ? "Green"
+        : "Rose"
+    );
   }, [resolvedTheme]);
   return (
     <div className="m-5">
       <p className="font-bold size-7 ">Theme</p>
       <div className="flex justify-center gap-4 items-center">
-        <Select onValueChange={(val) => handleTheme(val)} value={currentTheme}>
+        <label
+          htmlFor="theme"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Select theme
+        </label>
+        <Select onValueChange={(val) => handleTheme(val)}>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select Theme" />
+            <SelectValue placeholder={currentTheme || ""} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
