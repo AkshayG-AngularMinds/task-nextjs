@@ -91,6 +91,11 @@ const Dashboard = () => {
     setTotalPages(Math.ceil(invoiceData.length / totalItemsPerPage));
   }, [invoiceData]);
   useEffect(() => {
+    if (searchStr.length > 0)
+      setTotalPages(Math.ceil(invoices.length / totalItemsPerPage));
+    else setTotalPages(Math.ceil(invoiceData.length / totalItemsPerPage));
+  }, [searchStr]);
+  useEffect(() => {
     setInvoiceData(data);
   }, []);
   useEffect(() => {
