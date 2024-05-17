@@ -31,20 +31,41 @@ function Theme() {
 
   const handleTheme = (t: string) => {
     let res = resolvedTheme || "";
-    if ((darkColors.includes(t) || darkColors.includes(res)) && t !== "light") {
-      if (resolvedTheme === "light") {
-        setTheme(t);
+
+    if (t === "system") {
+      if (resolvedTheme == "light") {
+        return setTheme("dark");
       }
-      if (t === "orange" || resolvedTheme === "orange") setTheme("darkOrange");
-      if (t === "blue" || resolvedTheme === "blue") setTheme("darkBlue");
-      if (t === "rose" || resolvedTheme === "rose") setTheme("darkRose");
-      if (t === "green" || resolvedTheme === "green") setTheme("darkGreen");
-    } else if (lightColors.includes(t)) {
-      if (resolvedTheme === "dark") setTheme(t);
-      if (t === "orange" || resolvedTheme === "darkOrange") setTheme("orange");
-      if (t === "blue" || resolvedTheme === "darkBlue") setTheme("blue");
-      if (t === "rose" || resolvedTheme === "darkRose") setTheme("rose");
-      if (t === "green" || resolvedTheme === "darkGreen") setTheme("green");
+      let newTheme = resolvedTheme;
+      console.log(newTheme);
+      if (!resolvedTheme?.includes("dark")) {
+        newTheme =
+          "dark" +
+          resolvedTheme.charAt(0).toUpperCase() +
+          resolvedTheme.slice(1);
+      }
+      setTheme(newTheme);
+    } else {
+      if (
+        (darkColors.includes(t) || darkColors.includes(res)) &&
+        t !== "light"
+      ) {
+        if (resolvedTheme === "light") {
+          setTheme(t);
+        }
+        if (t === "orange" || resolvedTheme === "orange")
+          setTheme("darkOrange");
+        if (t === "blue" || resolvedTheme === "blue") setTheme("darkBlue");
+        if (t === "rose" || resolvedTheme === "rose") setTheme("darkRose");
+        if (t === "green" || resolvedTheme === "green") setTheme("darkGreen");
+      } else if (lightColors.includes(t)) {
+        if (resolvedTheme === "dark") setTheme(t);
+        if (t === "orange" || resolvedTheme === "darkOrange")
+          setTheme("orange");
+        if (t === "blue" || resolvedTheme === "darkBlue") setTheme("blue");
+        if (t === "rose" || resolvedTheme === "darkRose") setTheme("rose");
+        if (t === "green" || resolvedTheme === "darkGreen") setTheme("green");
+      }
     }
   };
   const [currentTheme, setCurrentTheme] = useState<any>("");
@@ -99,6 +120,10 @@ function Theme() {
               <div className="flex items-center justify-center">
                 <SelectItem value="dark">Dark</SelectItem>
                 <div className="flex h-4 w-5 items-center justify-center rounded-full bg-black"></div>
+              </div>
+              <div className="flex items-center justify-center">
+                <SelectItem value="system">System</SelectItem>
+                <div className="flex h-4 w-5 items-center justify-center rounded-full"></div>
               </div>
             </SelectGroup>
           </SelectContent>
