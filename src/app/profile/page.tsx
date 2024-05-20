@@ -311,7 +311,7 @@ const Profile = () => {
                             Cancel
                           </DialogClose>
                           <DialogClose>
-                            <Button type="submit">Submitfd</Button>
+                            <Button type="submit">Submit</Button>
                           </DialogClose>
                         </DialogFooter>
                       </form>
